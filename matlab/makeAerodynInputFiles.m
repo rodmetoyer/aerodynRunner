@@ -12,6 +12,7 @@ flowspeed = baseFlow:0.5:topTowSpeed+baseFlow; % This is the current speed plus 
 hubRadius = 0.01481667; % This goes with the 35.56 cm diameter blade defined by ncsuwt_blade.dat
 %bladeFileName = 'ncsuwt_blade_lowTwist.dat';       %%%%% REMEMBER TO CHANGE THE HUB RADIUS IF YOU USE A DIFFERENT ROTOR %%%%%%
 bladeFileName = 'ncsuwt_blade_OppVeryLowTwist.dat'; %%%%% REMEMBER TO CHANGE THE HUB RADIUS IF YOU USE A DIFFERENT ROTOR %%%%%%
+%bladeFileName = 'ncsuwt_blade_OppVeryLowTwist.dat';
 runname = "NCWT_OppVeryLowTwist";
 %airfoil = '"Airfoils\SG6040.dat"';
 airfoil = '"Airfoils\NRELS814.dat"';

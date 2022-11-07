@@ -16,7 +16,7 @@ bladeRadius_m = 0.3556*0.5;
 aspectRatio = 10;
 bladeChord_m = bladeRadius_m/aspectRatio;%0.625*0.0254; % Inches times meters per inch
 bladeDZfrac = 0.0; % Blade dead zone fraction (Ro/R - see Spera 2009)
-numSections = 13; % Number of sections (whole number)
+numSections = 50; % Number of sections (whole number)
 rtos = 2.0;    % This is the ratio of rotor radius to disturbed fluid
 % stream length for computing optimal TSR. A good rule-of-thumb value is
 % 2.0 (Ragheb and Ragheb 2011).
@@ -25,7 +25,8 @@ pitch = 0;
 
 %% Compute optimal TSR
 % Using method described in (Ragheb and Ragheb 2011)
-TSRarray = 0.1;% 2*pi/numBlades*rtos;
+TSRarray = 0.1; %2*pi/numBlades*rtos;
+name = ['S814_windTunnelRotor_g'];
 %TSR = 1.0;
 %TSRarray = [0.1 0.75 2.0 2*pi/numBlades*rtos];
 
@@ -43,7 +44,7 @@ for TSRitr = 1:1:numel(TSRarray)
     %% Make files
     if true % Change to false if you don't want to make files
         basefile = [pwd '\simulationInputFiles\S814_base.txt'];
-        name = 'S814_windTunnelRotor';
+        
         % convert to mm
         % bladeChord_mm = bladeChord_m*1000.0;
         %locs_mm = locs_m*1000.0;
@@ -51,6 +52,7 @@ for TSRitr = 1:1:numel(TSRarray)
     end
 
     %% Plots
+       figure
        plot(ax,locs_m,twist_deg,markers(TSRitr),'DisplayName',['TSR = ' num2str(TSR,'%3.2f')]);
        xlabel(ax,'Location (m)'); ylabel(ax,'Twist Angle (deg)');
        hfig2 = figure;
@@ -70,6 +72,10 @@ for TSRitr = 1:1:numel(TSRarray)
     if savePlots 
        export_fig(hfig2,[pwd '\figures\TSR' num2str(TSR,'%3.1f') 'bladePlot.png'],'-transparent','-m3');
     end
+    T = table(locs_m.',twist_deg.');
+    writetable(T,[pwd '\figures\' name '.xlsx']);
+%     locs_m,twist_deg
+%     writematrix()
 end
 ax.Color = 'none';
 ax.XLim = [0 round(bladeRadius_m*1.1,2)];
