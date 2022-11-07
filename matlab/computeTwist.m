@@ -8,7 +8,7 @@
 % This code is free to use and distribute
 
 clearvars; close all;
-savePlots = false;
+savePlots = true;
 
 %% Design parameters
 numBlades = 3;
@@ -69,7 +69,10 @@ for TSRitr = 1:1:numel(TSRarray)
        ax2.XTickLabel = '';
        ax2.YTickLabel = '';
        ax2.ZTickLabel = '';
-    if savePlots 
+    if savePlots
+        if ~exist([pwd '\figures\'], 'dir')
+            mkdir([pwd '\figures\']);
+        end
        export_fig(hfig2,[pwd '\figures\TSR' num2str(TSR,'%3.1f') 'bladePlot.png'],'-transparent','-m3');
     end
     T = table(locs_m.',twist_deg.');
@@ -115,9 +118,12 @@ function [x,y,z] = getCoords(basefile,name,c,locs,twistAngle_deg)
     for i=1:1:numSpanwiseLocs
         z(:,i) = ones(length(x),1)*locs(i);
         B = [x(:,i) y(:,i) z(:,i)];
+        if ~exist([pwd '\figures\'], 'dir')
+            mkdir([pwd '\figures\']);
+        end
         filename = [pwd '\figures\' name '_' num2str(i) '.txt']; 
         fid = fopen(filename,'w');
-        fprintf(fid,'%5.3f %5.3f %5.3f\n',B');
+        fprintf(fid,'%12.10f %12.10f %12.10f\n',B');
         fclose(fid);
     end
 end
